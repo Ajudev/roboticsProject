@@ -22,10 +22,10 @@ class Obstacle():
             		if i <= 15 or i > 335:
                 		if msg.ranges[i] >= self.LIDAR_ERR:
                     			self.scan_filterc.append(msg.ranges[i])
-			elif i <= 285 and i >= 255:
+			elif i <= 280 and i >= 260:
 				if msg.ranges[i] >= self.LIDAR_ERR:
                     			self.scan_filterr.append(msg.ranges[i])
-			elif i <= 105 and i >= 75:
+			elif i <= 100 and i >= 80:
 		        	if msg.ranges[i] >= self.LIDAR_ERR:
 		            		self.scan_filterl.append(msg.ranges[i])
 			elif i<= 195 and i>=165:
@@ -37,11 +37,11 @@ class Obstacle():
 		self.twist = Twist()
 
 		count = 0				
-		while count<22:
+		while count<20:
 			
 			self.get_lidar()
 
-			self.twist.linear.x = 0.15			
+			self.twist.linear.x = 0.2			
 			
 			if min(self.scan_filterr) > 0.4:
 				if min(self.scan_filterl) < 0.4:
@@ -72,7 +72,7 @@ class Obstacle():
 			
 			self.get_lidar()
 
-			self.twist.linear.x = -0.15			
+			self.twist.linear.x = -0.2			
 			if min(self.scan_filterl) > 0.4:
 				if min(self.scan_filterr) < 0.4:
 					if min(self.scan_filterb) > 0.2:

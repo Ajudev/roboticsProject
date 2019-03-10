@@ -42,65 +42,35 @@ class Obstacle():
 			
 			self.get_centre()
 
-			self.twist.linear.x = 0.2			
-			if min(self.scan_filterr) > 0.4:
-				if min(self.scan_filterl) > 0.4:
-					if min(self.scan_filterc) > 0.2:
-						rospy.sleep(2)
-						self.cmd_vel.publish(self.twist)
-						count +=1
-						rospy.loginfo('+1')
-					else:
-						self.twist.linear.x = 0.0
-						self.twist.angular.z = 0.0
-						self.cmd_vel.publish(self.twist)
-						rospy.loginfo('C!')
-				else:
-					self.twist.linear.x = 0.0
-					self.twist.angular.z = 0.0
-					self.cmd_vel.publish(self.twist)
-					rospy.loginfo('L!')
-			else:
-				self.twist.linear.x = 0.0
-				self.twist.angular.z = 0.0
-				self.cmd_vel.publish(self.twist)
-				rospy.loginfo('R!')
-						
-							
-		rospy.loginfo('Destination reached')
-		#rospy.on_shutdown(self.shutdown)
-		
-		
-		while count>0:
+			self.twist.linear.x = 0.2
 			
-			self.get_centre()
+				if min(self.scan_filterr) > 0.4:
+					if min(self.scan_filterl) < 0.4:
 
-			self.twist.linear.x = -0.2			
-			if min(self.scan_filterr) < 0.4:
-				if min(self.scan_filterl) > 0.4:
-					if min(self.scan_filterb) > 0.2:
-						rospy.sleep(2)
-						self.cmd_vel.publish(self.twist)
-						count -=1
-						rospy.loginfo('-1')
+						if min(self.scan_filterc) > 0.2:
+							self.cmd_vel.publish(self.twist)
+							self.r.sleep()
+							count +=1
+							rospy.loginfo('+1')
+						else:
+							self.twist.linear.x = 0.0
+							self.twist.angular.z = 0.0
+							self.cmd_vel.publish(self.twist)
+							rospy.loginfo('C!')
 					else:
 						self.twist.linear.x = 0.0
 						self.twist.angular.z = 0.0
 						self.cmd_vel.publish(self.twist)
-						rospy.loginfo('C!')
+						rospy.loginfo('L!')
 				else:
 					self.twist.linear.x = 0.0
 					self.twist.angular.z = 0.0
 					self.cmd_vel.publish(self.twist)
-					rospy.loginfo('L!')
-			else:
-				self.twist.linear.x = 0.0
-				self.twist.angular.z = 0.0
-				self.cmd_vel.publish(self.twist)
-				rospy.loginfo('R!')
+					rospy.loginfo('R!')
+						
+						
 		rospy.on_shutdown(self.shutdown)
 		rospy.loginfo('Destination reached')
-		
 	
 	def shutdown(self):
         	# stop turtlebot

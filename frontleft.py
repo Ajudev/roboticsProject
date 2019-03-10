@@ -22,10 +22,10 @@ class Obstacle():
             		if i <= 15 or i > 335:
                 		if msg.ranges[i] >= self.LIDAR_ERR:
                     			self.scan_filterc.append(msg.ranges[i])
-			elif i <= 280 and i >= 260:
+			elif i <= 285 and i >= 265:
 				if msg.ranges[i] >= self.LIDAR_ERR:
                     			self.scan_filterr.append(msg.ranges[i])
-			elif i <= 100 and i >= 80:
+			elif i <= 115 and i >= 75:
 		        	if msg.ranges[i] >= self.LIDAR_ERR:
 		            		self.scan_filterl.append(msg.ranges[i])
 			elif i <= 195 and i >= 165:
@@ -42,7 +42,8 @@ class Obstacle():
 			
 			self.get_centre()
 
-			self.twist.linear.x = 0.2			
+			self.twist.linear.x = 0.2
+			
 			if min(self.scan_filterr) > 0.4:
 				if min(self.scan_filterl) > 0.4:
 					if min(self.scan_filterc) > 0.2:
@@ -70,38 +71,7 @@ class Obstacle():
 		rospy.loginfo('Destination reached')
 		#rospy.on_shutdown(self.shutdown)
 		
-		
-		while count>0:
 			
-			self.get_centre()
-
-			self.twist.linear.x = -0.2			
-			if min(self.scan_filterr) < 0.4:
-				if min(self.scan_filterl) > 0.4:
-					if min(self.scan_filterb) > 0.2:
-						rospy.sleep(2)
-						self.cmd_vel.publish(self.twist)
-						count -=1
-						rospy.loginfo('-1')
-					else:
-						self.twist.linear.x = 0.0
-						self.twist.angular.z = 0.0
-						self.cmd_vel.publish(self.twist)
-						rospy.loginfo('C!')
-				else:
-					self.twist.linear.x = 0.0
-					self.twist.angular.z = 0.0
-					self.cmd_vel.publish(self.twist)
-					rospy.loginfo('L!')
-			else:
-				self.twist.linear.x = 0.0
-				self.twist.angular.z = 0.0
-				self.cmd_vel.publish(self.twist)
-				rospy.loginfo('R!')
-		rospy.on_shutdown(self.shutdown)
-		rospy.loginfo('Destination reached')
-		
-	
 	def shutdown(self):
         	# stop turtlebot
         	rospy.loginfo("terminate")

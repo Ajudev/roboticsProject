@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 
 import rospy
 from sensor_msgs.msg import LaserScan
@@ -11,7 +11,7 @@ class Obstacle():
 		self.cmd_vel = rospy.Publisher('/cmd_vel', Twist,queue_size=10)
 		self.obstacle()
 
-	def get_centre(self):
+	def get_lidar(self):
         	msg = rospy.wait_for_message("scan", LaserScan)
         	self.scan_filterc = [3.5]
 		self.scan_filterr = [3.5]
@@ -28,23 +28,24 @@ class Obstacle():
 			elif i <= 100 and i >= 80:
 		        	if msg.ranges[i] >= self.LIDAR_ERR:
 		            		self.scan_filterl.append(msg.ranges[i])
-			elif i <= 195 and i >= 165:
+			elif i<= 195 and i>=165:
 				if msg.ranges[i] >= self.LIDAR_ERR:
 					self.scan_filterb.append(msg.ranges[i])
 
 	def obstacle(self):
 		self.r = rospy.Rate(5)
 		self.twist = Twist()
-		
 
 		count = 0				
 		while count<20:
 			
-			self.get_centre()
+			self.get_lidar()
 
 			self.twist.linear.x = 0.2			
+		
 			if min(self.scan_filterr) > 0.4:
-				if min(self.scan_filterl) > 0.4:
+				if min(self.scan_filterl) < 0.4:
+
 					if min(self.scan_filterc) > 0.2:
 						rospy.sleep(2)
 						self.cmd_vel.publish(self.twist)
@@ -65,42 +66,9 @@ class Obstacle():
 				self.twist.angular.z = 0.0
 				self.cmd_vel.publish(self.twist)
 				rospy.loginfo('R!')
-						
-							
-		rospy.loginfo('Destination reached')
-		#rospy.on_shutdown(self.shutdown)
+				
 		
-		
-		while count>0:
-			
-			self.get_centre()
-
-			self.twist.linear.x = -0.2			
-			if min(self.scan_filterr) < 0.4:
-				if min(self.scan_filterl) > 0.4:
-					if min(self.scan_filterb) > 0.2:
-						rospy.sleep(2)
-						self.cmd_vel.publish(self.twist)
-						count -=1
-						rospy.loginfo('-1')
-					else:
-						self.twist.linear.x = 0.0
-						self.twist.angular.z = 0.0
-						self.cmd_vel.publish(self.twist)
-						rospy.loginfo('C!')
-				else:
-					self.twist.linear.x = 0.0
-					self.twist.angular.z = 0.0
-					self.cmd_vel.publish(self.twist)
-					rospy.loginfo('L!')
-			else:
-				self.twist.linear.x = 0.0
-				self.twist.angular.z = 0.0
-				self.cmd_vel.publish(self.twist)
-				rospy.loginfo('R!')
 		rospy.on_shutdown(self.shutdown)
-		rospy.loginfo('Destination reached')
-		
 	
 	def shutdown(self):
         	# stop turtlebot
@@ -118,3 +86,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
