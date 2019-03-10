@@ -44,29 +44,28 @@ class Obstacle():
 
 			self.twist.linear.x = 0.2			
 			
-				if min(self.scan_filterr) > 0.4:
-					if min(self.scan_filterl) < 0.4:
-
-						if min(self.scan_filterc) > 0.2:
-							self.cmd_vel.publish(self.twist)
-							self.r.sleep()
-							count +=1
-							rospy.loginfo('+1')
-						else:
-							self.twist.linear.x = 0.0
-							self.twist.angular.z = 0.0
-							self.cmd_vel.publish(self.twist)
-							rospy.loginfo('C!')
+			if min(self.scan_filterr) > 0.4:
+				if min(self.scan_filterl) < 0.4:
+					if min(self.scan_filterc) > 0.2:
+						self.cmd_vel.publish(self.twist)
+						self.r.sleep()
+						count +=1
+						rospy.loginfo('+1')
 					else:
 						self.twist.linear.x = 0.0
 						self.twist.angular.z = 0.0
 						self.cmd_vel.publish(self.twist)
-						rospy.loginfo('L!')
+						rospy.loginfo('C!')
 				else:
 					self.twist.linear.x = 0.0
 					self.twist.angular.z = 0.0
 					self.cmd_vel.publish(self.twist)
-					rospy.loginfo('R!')
+					rospy.loginfo('L!')
+			else:
+				self.twist.linear.x = 0.0
+				self.twist.angular.z = 0.0
+				self.cmd_vel.publish(self.twist)
+				rospy.loginfo('R!')
 						
 							
 		rospy.loginfo('Destination reached')
@@ -78,30 +77,28 @@ class Obstacle():
 			self.get_centre()
 
 			self.twist.linear.x = -0.2			
-			for x in range(0,2):
-				if min(self.scan_filterr) > 0.4:
-					if min(self.scan_filterl) > 0.4:
-
-						if min(self.scan_filterb) > 0.2:
-							self.cmd_vel.publish(self.twist)
-							self.r.sleep()
-							count -=1
-							rospy.loginfo('-1')
-						else:
-							self.twist.linear.x = 0.0
-							self.twist.angular.z = 0.0
-							self.cmd_vel.publish(self.twist)
-							rospy.loginfo('C!')
+			if min(self.scan_filterr) > 0.4:
+				if min(self.scan_filterl) > 0.4:
+					if min(self.scan_filterb) > 0.2:
+						self.cmd_vel.publish(self.twist)
+						self.r.sleep()
+						count -=1
+						rospy.loginfo('-1')
 					else:
 						self.twist.linear.x = 0.0
 						self.twist.angular.z = 0.0
 						self.cmd_vel.publish(self.twist)
-						rospy.loginfo('L!')
+						rospy.loginfo('C!')
 				else:
 					self.twist.linear.x = 0.0
 					self.twist.angular.z = 0.0
 					self.cmd_vel.publish(self.twist)
-					rospy.loginfo('R!')
+					rospy.loginfo('L!')
+			else:
+				self.twist.linear.x = 0.0
+				self.twist.angular.z = 0.0
+				self.cmd_vel.publish(self.twist)
+				rospy.loginfo('R!')
 		rospy.on_shutdown(self.shutdown)
 		rospy.loginfo('Destination reached')
 	
