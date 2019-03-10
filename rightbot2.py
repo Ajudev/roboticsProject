@@ -72,7 +72,7 @@ class Obstacle():
 		rospy.loginfo('Destination reached')
 		#rospy.on_shutdown(self.shutdown)
 		rospy.sleep(2)
-		while count>0:
+		"""while count>0:
 			
 			self.get_centre()
 
@@ -102,7 +102,7 @@ class Obstacle():
 					self.cmd_vel.publish(self.twist)
 					rospy.loginfo('R!')
 		rospy.on_shutdown(self.shutdown)
-		rospy.loginfo('Destination reached')
+		rospy.loginfo('Destination reached')"""
 	
 	def shutdown(self):
         	# stop turtlebot
