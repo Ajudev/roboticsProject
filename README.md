@@ -1,2 +1,2 @@
 # roboticsProject
-Github repository fro robotics project
+Github repository for robotics project
