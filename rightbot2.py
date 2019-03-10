@@ -70,7 +70,7 @@ class Obstacle():
 						
 							
 		rospy.loginfo('Destination reached')
-		#rospy.on_shutdown(self.shutdown)
+		rospy.on_shutdown(self.shutdown)
 		rospy.sleep(2)
 		"""while count>0:
 			
