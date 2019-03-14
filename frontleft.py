@@ -47,7 +47,7 @@ class Obstacle():
 			if min(self.scan_filterr) > 0.4:
 				if min(self.scan_filterl) > 0.4:
 					if min(self.scan_filterc) > 0.2:
-						rospy.sleep(2)
+						"""rospy.sleep(2)"""
 						self.cmd_vel.publish(self.twist)
 						count +=1
 						rospy.loginfo('+1')
