@@ -22,10 +22,10 @@ class Obstacle():
             		if i <= 15 or i > 335:
                 		if msg.ranges[i] >= self.LIDAR_ERR:
                     			self.scan_filterc.append(msg.ranges[i])
-			elif i <= 285 and i >= 265:
+			elif i <= 280 and i >= 260:
 				if msg.ranges[i] >= self.LIDAR_ERR:
                     			self.scan_filterr.append(msg.ranges[i])
-			elif i <= 115 and i >= 75:
+			elif i <= 100 and i >= 80:
 		        	if msg.ranges[i] >= self.LIDAR_ERR:
 		            		self.scan_filterl.append(msg.ranges[i])
 			elif i <= 195 and i >= 165:
