@@ -37,7 +37,7 @@ class Obstacle():
 		self.twist = Twist()
 
 		count = 0				
-		while count<20:
+		while count<10:
 			
 			self.get_lidar()
 

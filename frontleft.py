@@ -38,7 +38,7 @@ class Obstacle():
 		
 
 		count = 0				
-		while count<20:
+		while count<10:
 			
 			self.get_centre()
 
