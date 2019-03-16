@@ -1,6 +1,7 @@
 #!/usr/bin/env python 
 
 import rospy
+import re
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 from math import radians 
@@ -47,6 +48,7 @@ class Obstacle():
 			if min(self.scan_filterr) > 0.4:
 				if min(self.scan_filterl) < 0.4:
 					if min(self.scan_filterc) > 0.2:
+						rospy.sleep(1)
 						self.cmd_vel.publish(self.twist)
 						count +=1
 						rospy.loginfo('+1')
