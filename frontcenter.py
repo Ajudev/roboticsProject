@@ -43,8 +43,8 @@ class Obstacle():
 
 			self.twist.linear.x = 0.2			
 		
-			if min(self.scan_filterr) > 0.4:
-				if min(self.scan_filterl) < 0.4:
+			if min(self.scan_filterr) > 0.2:
+				if min(self.scan_filterl) < 0.2:
 
 					if min(self.scan_filterc) > 0.2:
 						rospy.sleep(1)
