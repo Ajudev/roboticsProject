@@ -31,41 +31,54 @@ class Obstacle():
 			elif i<= 195 and i>=165:
 				if msg.ranges[i] >= self.LIDAR_ERR:
 					self.scan_filterb.append(msg.ranges[i])
+	def readFile(self):
+		f = open("file.txt", "r+")
+		steps = f.readLines()
+		f.close()
+		return steps[0] 
+	def writeFile(self,count):
+		f = open("file.txt","w+")
+		f.write(count)
+		f.close()
 
 	def obstacle(self):
 		self.r = rospy.Rate(5)
 		self.twist = Twist()
 
-		count = 0				
-		while count<5:
+		count = 0
+		data = self.readFile();
+		if(count!=data):				
+			while count<5:
 			
-			self.get_lidar()
+				self.get_lidar()
 
-			self.twist.linear.x = 0.2			
+				self.twist.linear.x = 0.2			
 		
-			if min(self.scan_filterr) > 0.2:
-				if min(self.scan_filterl) < 0.2:
+				if min(self.scan_filterr) > 0.2:
+					if min(self.scan_filterl) < 0.2:
 
-					if min(self.scan_filterc) > 0.2:
-						rospy.sleep(1)
-						self.cmd_vel.publish(self.twist)
-						count +=1
-						rospy.loginfo('+1')
+						if min(self.scan_filterc) > 0.2:
+							rospy.sleep(1)
+							self.cmd_vel.publish(self.twist)
+							count +=1
+							rospy.loginfo('+1')
+						else:
+							self.twist.linear.x = 0.0
+							self.twist.angular.z = 0.0
+							self.cmd_vel.publish(self.twist)
+							rospy.loginfo('C!')
 					else:
 						self.twist.linear.x = 0.0
 						self.twist.angular.z = 0.0
 						self.cmd_vel.publish(self.twist)
-						rospy.loginfo('C!')
+						rospy.loginfo('L!')
 				else:
 					self.twist.linear.x = 0.0
 					self.twist.angular.z = 0.0
 					self.cmd_vel.publish(self.twist)
-					rospy.loginfo('L!')
-			else:
-				self.twist.linear.x = 0.0
-				self.twist.angular.z = 0.0
-				self.cmd_vel.publish(self.twist)
-				rospy.loginfo('R!')
+					rospy.loginfo('R!')
+		else:
+			rospy.loginfo('Cant proceed forward')
 				
 		
 		rospy.on_shutdown(self.shutdown)
