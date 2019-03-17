@@ -47,7 +47,7 @@ class Obstacle():
 
 		count = 0
 		data = self.readFile();
-		if(count!=data):				
+		if(count==data):				
 			while count<5:
 			
 				self.get_lidar()
@@ -77,6 +77,8 @@ class Obstacle():
 					self.twist.angular.z = 0.0
 					self.cmd_vel.publish(self.twist)
 					rospy.loginfo('R!')
+			self.writeFile(count)
+		
 		else:
 			rospy.loginfo('Cant proceed forward')
 				

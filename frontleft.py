@@ -77,6 +77,7 @@ class Obstacle():
 					self.twist.angular.z = 0.0
 					self.cmd_vel.publish(self.twist)
 					rospy.loginfo('R!')
+			self.writeFile(count)
 		else:
 			rospy.loginfo('Cant proceed forward')
 						
