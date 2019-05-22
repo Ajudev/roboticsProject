@@ -33,12 +33,12 @@ class Obstacle():
 					self.scan_filterb.append(msg.ranges[i])
 	def readFile(self):
 		f = open("file.txt", "r+")
-		steps = f.readLines()
+		steps = f.read()
 		f.close()
-		return steps[0] 
+		return steps 
 	def writeFile(self,count):
 		f = open("file.txt","w+")
-		f.write(count)
+		f.write(str(count))
 		f.close()
 
 	def obstacle(self):

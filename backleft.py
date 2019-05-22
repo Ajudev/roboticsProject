@@ -8,11 +8,11 @@ from math import radians
 class Obstacle():
 	def __init__(self):
 		self.LIDAR_ERR = 0.05
-		self.cmd_vel = rospy.Publisher('/cmd_vel', Twist,queue_size=10)
+		self.cmd_vel = rospy.Publisher('/turtlebot3/cmd_vel', Twist,queue_size=10)
 		self.obstacle()
 
 	def get_lidar(self):
-        	msg = rospy.wait_for_message("scan", LaserScan)
+        	msg = rospy.wait_for_message("/turtlebot3/scan", LaserScan)
         	self.scan_filterc = [3.5]
 		self.scan_filterr = [3.5]
 		self.scan_filterl = [3.5]
